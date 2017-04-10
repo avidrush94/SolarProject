@@ -8,7 +8,9 @@ $loginResult = $conn->query($sql);
 if ($loginResult->num_rows == 1) {
   while($row = $loginResult->fetch_assoc()) {
     $pincode=$row["pincode"];
+
     //echo $pincode;
+    
   }
 }
 ?>
@@ -105,23 +107,23 @@ if ($loginResult->num_rows == 1) {
     <!--Arduino Code Download genertion system-->
     <script>
     // Used to generate the mac address and ip address value
-
-
-    var strClient="<?php echo $user; ?>";
-    var res;
-    function writeFile(strMac,strIp) {
-      $.ajax({
-        type:"POST",
-        url:"write_file.php",
-        data:"mac=" + strMac + "&ip=" +strIp +"&clientId="+strClient,
-        success: function(result){
-          res=result;
-        }
-      });
-      document.getElementById("arduino_download").style.display = "block";
-      document.getElementById("arduino").style.display = "none";
-      document.getElementById("arduino_download").href="http://solarsolutions.esy.es/"+strClient+".ino";
-      document.getElementById("arduino_download").onclick="document.execCommand('SaveAs','1','"+strClient+".ino')";
+    function generate_info() {
+      var strClient="<?php echo $user; ?>";
+      var res;
+      function writeFile(strMac,strIp) {
+        $.ajax({
+          type:"POST",
+          url:"write_file.php",
+          data:"mac=" + strMac + "&ip=" +strIp +"&clientId="+strClient,
+          success: function(result){
+            res=result;
+          }
+        });
+        document.getElementById("arduino_download").style.display = "block";
+        document.getElementById("arduino").style.display = "none";
+        document.getElementById("arduino_download").href="http://solarsolutions.esy.es/"+strClient+".ino";
+        document.getElementById("arduino_download").onclick="document.execCommand('SaveAs','1','"+strClient+".ino')";
+      }
     }
     </script>
 
