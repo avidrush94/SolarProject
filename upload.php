@@ -19,7 +19,7 @@ if($conn->query($sql)){
 
   if ($result->num_rows == 1) {
     while($row = $result->fetch_assoc()) {
-      echo "" . $row["x_servo"]. "<br>" . $row["y_servo"]. "";
+      echo "" . $row["x_servo"]. "<br>" . $row["y_servo"]. "<br>";
     }
   } else {
     echo "0 results";
