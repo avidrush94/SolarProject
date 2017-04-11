@@ -66,7 +66,7 @@ if ($result1->num_rows > 0) {
                 if($diffDate > 0) {
                   echo "Day getting Longer<br>";
 
-                  //Update the X_servo information in the database
+                  //Update the Y_servo information in the database
                   $sql4 = "UPDATE arduino_info set y_servo='".(int)$y_servo."' WHERE client_id='".$row1["client_id"]."';";
 
                   if($conn->query($sql4)) {
@@ -78,8 +78,9 @@ if ($result1->num_rows > 0) {
               }else if($diffDate < 0){
                   echo "Day getting Shorter<br>";
 
-                  //Update the X_servo information in the database
-                  $sql4 = "UPDATE arduino_info set y_servo='0' WHERE client_id='".$row1["client_id"]."';";
+                  //Update the Y_servo information in the database
+                  $diffDate = 23+$diffDate;
+                  $sql4 = "UPDATE arduino_info set y_servo='".(int)$y_servo."' WHERE client_id='".$row1["client_id"]."';";
 
                   if($conn->query($sql4)) {
                     echo "Updated to ".$diffDate."<br>";
