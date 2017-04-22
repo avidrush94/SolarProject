@@ -10,7 +10,7 @@ if ($loginResult->num_rows == 1) {
     $pincode=$row["pincode"];
 
     //echo $pincode;
-    
+
   }
 }
 ?>
@@ -185,9 +185,9 @@ if ($loginResult->num_rows == 1) {
 
   </div>
 
-  <div id="status">
+  <!--<div id="status">
 
-    <!--Pie Chart for efficiency level-->
+    Pie Chart for efficiency level
     <div class="w3-third w3-border-theme w3-padding w3-text-theme" >
       <div style="font-size:20px">
         <h3>Efficiency</h3>
@@ -196,7 +196,7 @@ if ($loginResult->num_rows == 1) {
     </div>
 
 
-    <!--Manual Panel Controlls-->
+    Manual Panel Controlls
     <div class="w3-third w3-border-theme w3-padding w3-text-theme" >
       <div style="font-size:20px">
         <h3>Controls</h3>
@@ -205,18 +205,18 @@ if ($loginResult->num_rows == 1) {
       </div>
 
 
-    <!--Latest Voltage and Current Outputs & Panel Status-->
+    Latest Voltage and Current Outputs & Panel Status
     <div class="w3-third w3-border-theme w3-padding w3-text-theme" >
       <div style="font-size:20px">
         <h3>Panel Stats</h3>
         <span id="stats" class="w3-right" style="font-size:45px;">
           <i class="fa fa-calendar" aria-hidden="true" style="font-size:25px;"></i>
-          <?php echo date("m-d");?>
+          echo date("m-d");
         </span>
       </div>
     </div>
 
-  </div>
+  </div>-->
 
   <!--Voltage Current Line Graph-->
   <div class="w3-container">
