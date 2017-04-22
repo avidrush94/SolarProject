@@ -21,7 +21,7 @@ $sql="INSERT into client_info (client_id,client_pass,client_name,address,address
     VALUES ('$client_id','$password','$name','$address1','$address2','$city','$state','$email','$contact_1','$pincode','$longitude','$latitude');";
 
 $sql .="INSERT into location_info (name,pincode,longitude,latitude)
-    VALUES ('$city','$pincode','$logitude','$latitude');";
+    VALUES ('$city','$pincode','$longitude','$latitude');";
 
 $sql .="CREATE TABLE weatherAt_$pincode (
 	id INT(10) NOT NULL auto_increment,
