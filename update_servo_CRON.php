@@ -47,7 +47,7 @@ if ($result1->num_rows > 0) {
                 //since the current time is available in minutes so divide by 60 to get the Hour
                 //At each hour the arms of the clock move at 0.25 degree so multiply with that
                 $diffTime = round((abs($curr_time - $time1)/60)*0.25);
-                echo $diffTime."<br>";
+                //echo $diffTime."<br>";
 
                 //---------------Y_SERVO LOGIV---------------//
 
@@ -56,11 +56,11 @@ if ($result1->num_rows > 0) {
                 $date2 = strtotime("2017-12-21");
                 //if the current date is positive it means that the current date is
                 $diffDate = ((($date1 - $curr_date)/60)/60)/24;
-                echo $diffDate."<br>";
+                //echo $diffDate."<br>";
 
                 //Login to get angle for y_servo
                 $y_servo = $diffDate*0.12;
-                echo (int)$y_servo."<br>";
+                //echo (int)$y_servo."<br>";
 
                 //if day is increasing, then...
                 if($diffDate > 0) {
@@ -92,30 +92,34 @@ if ($result1->num_rows > 0) {
                 }
 
                 //if it is day, then...
-                if($curr_time > $time1) {
-                  echo "Beyond sunrise<br>";
-
-                  //Update the X_servo information in the database
-                  $sql5 = "UPDATE arduino_info set x_servo='".$diffTime."' WHERE client_id='".$row1["client_id"]."';";
-
-                  if($conn->query($sql5)) {
-                    echo "Updated to ".$diffTime."<br>";
-                  }else{
-                    echo "".$conn->err."<br>";
-                  }
+                if($curr_time > $time) {
                 //if it is Night, then...
-                }else if($curr_time < $time2){
-                  echo "Beyond sunset<br>";
+                  if($curr_time > $time2){
+                    echo "Beyond sunset<br>";
 
-                  //Update the X_servo information in the database
-                  $sql5 = "UPDATE arduino_info set x_servo='0' WHERE client_id='".$row1["client_id"]."';";
+                    //Update the X_servo information in the database
+                    $x_servo = 0;
+                    $sql5 = "UPDATE arduino_info set x_servo=".$x_servo." WHERE client_id='".$row1["client_id"]."';";
 
-                  if($conn->query($sql5)) {
-                    echo "Updated to ".$diffTime."<br>";
+                    if($conn->query($sql5)) {
+                      echo "Updated to ".$diffTime."<br>";
+                    }else{
+                      echo "".$conn->err."<br>";
+                    }
                   }else{
-                    echo "".$conn->err."<br>";
+                    //If it is Day, then...
+                    echo "Beyond sunrise<br>";
+
+                    //Update the X_servo information in the database
+                    $sql5 = "UPDATE arduino_info set x_servo='".$diffTime."' WHERE client_id='".$row1["client_id"]."';";
+
+                    if($conn->query($sql5)) {
+                      echo "Updated to ".$diffTime."<br>";
+                    }else{
+                      echo "".$conn->err."<br>";
+                    }
                   }
-                } else{
+                }else{
                   echo "Nothing<br>";
                 }
               }

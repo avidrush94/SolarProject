@@ -19,7 +19,23 @@ if($conn->query($sql)){
 
   if ($result->num_rows == 1) {
     while($row = $result->fetch_assoc()) {
-      echo "" . $row["x_servo"]. "<br>" . $row["y_servo"]. "<br>";
+      $x_servo = (int)$row["x_servo"];
+      $y_servo = (int)$row["y_servo"];
+      if($x_servo<100 && $x_servo>=10){
+        (string)$x_servo = "0".(string)$x_servo;
+      }else if($x_servo<10){
+        (string)$x_servo = "00".(string)$x_servo;
+      }else{
+      }
+
+      if($y_servo<100 && $y_servo>=10){
+        (string)$y_servo = "0".(string)$y_servo;
+      }else if($y_servo<10){
+        (string)$y_servo = "00".(string)$y_servo;
+      }else{
+      }
+
+      echo "" .$x_servo. "<br>" .$y_servo;
     }
   } else {
     echo "0 results";
