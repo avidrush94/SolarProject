@@ -1,14 +1,16 @@
 <?php
-$mac=str_replace(":",", 0x",$_POST["mac"]);
-$mac="0x".$mac
-$ip=str_replace(":",",",$_POST["ip"]);
-$clientId=$_POST["clientId"];
+$mac=str_replace(":",", 0x",$_REQUEST["mac"]);
+$mac2 = "0x".$mac;
+echo $mac2;
+$ip=str_replace(":",",",$_REQUEST["ip"]);
+echo $ip;
+$clientId=$_REQUEST["client_id"];
 $myfile = fopen("".$clientId.".ino", "w")  or die("Unable to open file!");
 $txt = '#include <SPI.h>
 #include <Servo.h>
 #include <Ethernet.h>
 #include <LiquidCrystal.h>
-byte mac[] = { '.$mac.' };
+byte mac[] = { '.$mac2.' };
 char server[] = "solarsolutions.esy.es";
 IPAddress ip('.$ip.');
 IPAddress myDns(31,170,164,249);
