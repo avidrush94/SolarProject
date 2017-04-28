@@ -8,7 +8,7 @@ $current=$_REQUEST["current"];
 $date=date("Y-m-d");
 $date.=" ";
 $date.=date("h:i:sa");
-
+$current=$current/1000;
 $sql = "INSERT INTO arduino_$client_id (date_log,voltage,current)
       VALUES ('$date','$voltage','$current')";
 

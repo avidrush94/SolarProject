@@ -11,12 +11,13 @@ if ($loginResult->num_rows == 1) {
   }
 }
 
-$sql2 = "SELECT mac_addr,ip_addr FROM arduino_info WHERE client_id='".$user."';";
+$sql2 = "SELECT date_log,mac_addr,ip_addr FROM arduino_info WHERE client_id='".$user."';";
 $loginResult2 = $conn->query($sql2);
 if ($loginResult2->num_rows == 1) {
   while($row2 = $loginResult->fetch_assoc()) {
     $mac_addr=$row2["mac_addr"];
     $ip_addr=$row2["ip_addr"];
+    $date_log=$row2["date_log"];
   }
 }
 ?>
@@ -29,6 +30,79 @@ if ($loginResult2->num_rows == 1) {
   <script src="https://use.fontawesome.com/04dafedc6e.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
+  <!--Script to load the Line Graph using ChartJS-->
+  <!-- javascript -->
+    <script src="resources/Chart.min.js"></script>
+    <script>
+    window.setInterval(function(){
+    	$.ajax({
+    		url : "fetch_chart_data.php?client_id=<?php echo $user; ?>",
+    		type : "GET",
+    		success : function(data){
+    			console.log(data);
+
+    			//var id = [];
+    			var date_log = [];
+    			var voltage = [];
+    			var current = [];
+
+    			for(var i in data) {
+    				//id.push("id " + data[i].id);
+    				date_log.push(data[i].date_log);
+    				voltage.push(data[i].voltage);
+    				current.push(data[i].current);
+    			}
+
+    			var chartdata = {
+    				labels: date_log,
+    				datasets: [
+    					/*{
+    						label: "Date_log",
+    						fill: false,
+    						lineTension: 0.1,
+    						backgroundColor: "rgba(59, 89, 152, 0.75)",
+    						borderColor: "rgba(59, 89, 152, 1)",
+    						pointHoverBackgroundColor: "rgba(59, 89, 152, 1)",
+    						pointHoverBorderColor: "rgba(59, 89, 152, 1)",
+    						data: date_log
+    					},*/
+    					{
+    						label: "Voltage",
+    						fill: false,
+    						lineTension: 0.1,
+    						backgroundColor: "rgba(29, 202, 255, 0.75)",
+    						borderColor: "rgba(29, 202, 255, 1)",
+    						pointHoverBackgroundColor: "rgba(29, 202, 255, 1)",
+    						pointHoverBorderColor: "rgba(29, 202, 255, 1)",
+    						data: voltage
+    					},
+    					{
+    						label: "Current",
+    						fill: false,
+    						lineTension: 0.1,
+    						backgroundColor: "rgba(211, 72, 54, 0.75)",
+    						borderColor: "rgba(211, 72, 54, 1)",
+    						pointHoverBackgroundColor: "rgba(211, 72, 54, 1)",
+    						pointHoverBorderColor: "rgba(211, 72, 54, 1)",
+    						data: current
+    					}
+    				]
+    			};
+
+          var ctx = $("#mycanvas");
+
+    			var LineGraph = new Chart(ctx, {
+    				type: 'line',
+    				data: chartdata
+    			});
+    		},
+    		error : function(data) {
+
+    		}
+    	});
+    },10000);
+</script>
+
   <!--Script to continiously load the latest Voltage and Current values-->
   <script>
   window.setInterval(fetch_data, 10000);
@@ -40,6 +114,7 @@ if ($loginResult2->num_rows == 1) {
         myObj = JSON.parse(this.responseText);
         document.getElementById("volt_op").innerHTML = myObj.voltage;
         document.getElementById("curr_op").innerHTML = myObj.current;
+        document.getElementById("time_op").innerHTML = myObj.date_log;
       }
     };
     xhttp.open("GET", "/fetch_info.php?client_id=<?php echo $user; ?>", true);
@@ -147,10 +222,10 @@ if ($loginResult2->num_rows == 1) {
   <!--Voltage Current Line Graph-->
     <div class="w3-container">
       <div class="w3-threequarter">
-        <div id="status_details" style="height: 400px">
-          <div>Voltage :<span id="volt_op" /></div>
-          <div>Current :<span id="curr_op" /></div>
+        <div class="chart-container" style="margin-right:40px;">
+          <canvas id="mycanvas"></canvas>
         </div>
+
       </div>
 
       <div class="w3-quarter">
@@ -158,6 +233,12 @@ if ($loginResult2->num_rows == 1) {
       </div>
     </div>
 
+    <div id="status_details">
+      <div class="w3-third">Voltage :<span id="volt_op" /></div>
+      <div class="w3-third">Current :<span id="curr_op" /></div>
+      <div class="w3-third">Time :<span id="time_op" /></div>
+    </div>
+    <br>
 
   <!-- Footer -->
   <footer class=" w3-theme-dark w3-padding-16 w3-margin-top">
