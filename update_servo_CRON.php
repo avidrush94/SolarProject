@@ -92,9 +92,8 @@ if ($result1->num_rows > 0) {
                 }
 
                 //if it is day, then...
-                if($curr_time > $time1) {
+                if($curr_time > $time1 && $curr_time > $time2) {
                 //if it is Night, then...
-                  if($curr_time > $time2){
                     echo "Beyond sunset<br>";
 
                     //Update the X_servo information in the database
@@ -106,7 +105,6 @@ if ($result1->num_rows > 0) {
                     }else{
                       echo "".$conn->err."<br>";
                     }
-                  }
                 }else if($curr_time < $time1){
                     //If it is Day, then...
                     echo "before sunrise<br>";
@@ -120,7 +118,14 @@ if ($result1->num_rows > 0) {
                       echo "".$conn->err."<br>";
                     }
                   }else{
-                  echo "Nothing<br>";
+                    $x_servo = $diffTime;
+                    $sql5 = "UPDATE arduino_info set x_servo=".$x_servo." WHERE client_id='".$row1["client_id"]."';";
+
+                    if($conn->query($sql5)) {
+                      echo "Updated to ".$diffTime."<br>";
+                    }else{
+                      echo "".$conn->err."<br>";
+                    }
                 }
               }
             }

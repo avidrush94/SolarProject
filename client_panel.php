@@ -180,7 +180,7 @@ if ($loginResult2->num_rows == 1) {
   <div id="status">
 
     <!--Arduino Code Download-->
-    <div class="w3-third w3-border-theme w3-padding" style="background-color:#07889b;color:white">
+    <div class="w3-half w3-border-theme w3-padding" style="background-color:#07889b;color:white">
       <div style="font-size:20px">
         <h3>Arduino</h3>
         <a id="arduino" class="w3-right" style="font-size:45px;" onclick="generate_info()">
@@ -193,21 +193,8 @@ if ($loginResult2->num_rows == 1) {
       </div>
     </div>
 
-
-    <!--Current Total Savings-->
-    <div class="w3-third w3-border-theme w3-padding" style="background-color:#07889b;color:white">
-      <div style="font-size:20px">
-        <h3>Savings</h3>
-        <span id="savings" class="w3-right" style="font-size:45px;">
-          <i class="fa fa-inr" aria-hidden="true" style="font-size:25px;"></i>
-          53
-        </span>
-      </div>
-    </div>
-
-
     <!--Current Date and Time-->
-    <div class="w3-third w3-border-theme w3-padding" style="background-color:#07889b;color:white">
+    <div class="w3-half w3-border-theme w3-padding" style="background-color:#07889b;color:white">
       <div style="font-size:20px">
         <h3>Time & Date </h3>
         <span id="savings" class="w3-right" style="font-size:45px;">
